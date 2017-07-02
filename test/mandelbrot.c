@@ -193,6 +193,8 @@ int main (void)
   double xm, ym, xstep, ystep, x1, y1, x2, y2;
   char s[20];
   
+  c = 0;
+  
   initwindow (0, 0); // fullscreen
   
   maxx = getmaxx ();
