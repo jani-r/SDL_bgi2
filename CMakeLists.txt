@@ -28,8 +28,8 @@ set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
 set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
 set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
 
-# Add library SDL_bgi2
-set(targetname SDL_bgi2)
+# Add library SDL_bgi
+set(targetname SDL_bgi)
 add_library(${targetname} STATIC src/SDL_bgi.c)
 target_include_directories(${targetname} PRIVATE ${sdl_include_dirs})
 target_link_libraries(${targetname} sdl2 sdl2main)
