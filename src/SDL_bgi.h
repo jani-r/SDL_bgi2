@@ -5,7 +5,7 @@
 // Guido Gonzato, PhD
 // November 15, 2016
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #ifndef _SDL_BGI_H
 #define _SDL_BGI_H
