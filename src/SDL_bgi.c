@@ -6,6 +6,7 @@
 // November 15, 2016
 
 #include <math.h>
+#include <stdio.h>
 #include "SDL_bgi.h"
 #include "SDL_bgi_font.h"
 
