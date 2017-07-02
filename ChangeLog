@@ -1,0 +1,65 @@
+Changelog
+---------
+
+v. 2.0.8, 2016-11-15
+- fixed bug in palette-manipulating functions 
+  (reported by Jacek Mainczyk)
+- Makefile changes
+
+v. 2.0.7, 2016-11-10
+- fixed bug in event() (reported by Peje Nilsson)
+- added eventtype()
+
+v. 2.0.6, 2016-02-29
+- fixed bug in writeimagefile() (reported by
+  Manea Alexandru Damian)
+- implemented clipping in readimagefile()
+- turtle graphics improvements
+- documentation improvements
+
+v. 2.0.5, 2015-12-13
+- fillpoly() correctly implemented
+- demo programs sdlbgidemo.c and fern.c improved
+- symbol _SDL_BGI_H defined in SDL_bgi.h
+- minor fix in getch()
+
+v. 2.0.4, 2015-11-30
+- rewritten to use SDL_Surfaces only instead of
+  bitmaps in main RAM
+- ellipse() and fillellipse() improved
+- xkbhit() added
+
+v. 2.0.3, 2015-09-28
+- in "slow mode", screen refresh is also 
+  triggered by kbhit() and getch()
+- minimal dos.h and conio.h provided
+- kbhit() rewritten to avoid buffered keys
+
+v. 2.0.2, 2015-06-03
+- fill patterns (not for floodfill() yet)
+- setfillpattern()/getfillpattern() implemented
+- writeimagefile() added
+- documentation updates
+- test programs updates
+
+v. 2.0.1, 2015-05-11
+- line patterns implemented
+- floodfill improvements
+- writeimagefile() added
+- documentation updates
+
+v. 2.0.0, 2015-04-30
+- major release: rewritten to use SDL2 only
+- added readimagefile() and logical plotting (XOR, etc.)
+
+v. 1.0.1, 2014-12-09
+- Fixed minor bugs in putpixel() (reported by Angelo Graziosi)
+- changed getimage()/putimage() to include width, heigth info
+  in saved bitmap
+- changed getimage()/putimage() to include viewport info
+- fixed MAXCOLOR value (reported by Angelo Graziosi)
+- fixed kbhit() behaviour (reported by Angelo Graziosi) - but breaks
+  mouseclick() as a result. To be fixed later.
+
+v. 1.0.0, 2014-11-07
+- Initial release.
