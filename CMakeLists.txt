@@ -8,20 +8,10 @@ endif()
 # Location for SDL2 library and include files
 if(EXISTS ${CMAKE_SOURCE_DIR}/SDL2)
 	set(sdl2_library_dir ${CMAKE_SOURCE_DIR}/SDL2)
+	set(sdl_include_dirs ${sdl2_library_dir}/include)
 else()
 	message( FATAL_ERROR "SDL2 development libraries not found. Add SDL2 library and include files in folder SDL2." )
 endif()
-
-# Needed configuration for SDL2 
-add_library(sdl2dll STATIC IMPORTED)
-add_library(sdl2lib STATIC IMPORTED)
-add_library(sdl2main STATIC IMPORTED)
-add_dependencies(sdl2lib sdl2dll)
-add_dependencies(sdl2main sdl2dll)
-set_target_properties(sdl2dll PROPERTIES IMPORTED_LOCATION ${sdl2_library_dir}/bin/SDL2.dll)
-set_target_properties(sdl2lib PROPERTIES IMPORTED_LOCATION ${sdl2_library_dir}/lib/SDL2.lib)
-set_target_properties(sdl2main PROPERTIES IMPORTED_LOCATION ${sdl2_library_dir}/lib/SDL2main.lib)
-set(sdl_include_dirs ${sdl2_library_dir}/include)
 
 # Set general output directories
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
@@ -31,8 +21,7 @@ set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
 # Add library SDL_bgi
 set(targetname SDL_bgi)
 add_library(${targetname} STATIC src/SDL_bgi.c)
-target_include_directories(${targetname} PRIVATE ${sdl_include_dirs})
-target_link_libraries(${targetname} sdl2 sdl2main)
+target_include_directories(${targetname} PRIVATE src/SDL_bgi.h src/graphics.h ${sdl_include_dirs})
 
 # Set output directories for target
 set_target_properties( ${targetname} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/_output/bin )
