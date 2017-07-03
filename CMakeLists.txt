@@ -21,7 +21,7 @@ set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
 # Add library SDL_bgi
 set(targetname SDL_bgi)
 add_library(${targetname} STATIC src/SDL_bgi.c)
-target_include_directories(${targetname} PRIVATE src/SDL_bgi.h src/graphics.h ${sdl_include_dirs})
+target_include_directories(${targetname} PRIVATE ${CMAKE_SOURCE_DIR}/src ${sdl_include_dirs})
 
 # Set output directories for target
 set_target_properties( ${targetname} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/_output/bin )
@@ -85,4 +85,25 @@ add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E copy
                 ${sdl2_library_dir}/lib/SDL2main.lib
                 ${CMAKE_BINARY_DIR}/_output/lib/SDL2main.lib)
+
 				
+				
+				
+project (SDL_bgi_sample_mandelbrot)
+
+set(targetname mandelbrot)
+add_executable(${targetname} WIN32 ${CMAKE_SOURCE_DIR}/test/mandelbrot.c)
+target_include_directories(${targetname} PRIVATE ${CMAKE_SOURCE_DIR}/src ${sdl_include_dirs})
+target_link_libraries(${targetname} SDL_bgi ${sdl2_library_dir}/lib/SDL2.lib ${sdl2_library_dir}/lib/SDL2main.lib)
+
+# Set output directories for target
+set_target_properties( ${targetname} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/_output/bin )
+set_target_properties( ${targetname} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/_output/bin )
+set_target_properties( ${targetname} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/_output/bin )
+
+# Copy SDL2.dll to output
+add_custom_command(
+        TARGET ${targetname} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+                ${sdl2_library_dir}/bin/SDL2.dll
+                ${CMAKE_BINARY_DIR}/_output/bin/SDL2.dll)				
