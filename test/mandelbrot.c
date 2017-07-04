@@ -28,7 +28,9 @@
 
 // Needed to make the code work with mingw-64. Otherwise it expects to
 // find WinMain defined
+#ifdef __MINGW32__
 #define SDL_MAIN_HANDLED
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
