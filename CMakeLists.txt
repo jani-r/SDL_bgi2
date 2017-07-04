@@ -1,8 +1,13 @@
 project (SDL_bgi2)
 cmake_minimum_required (VERSION 3.7)
 
-if(NOT MSVC)
-	message( FATAL_ERROR "This CMakeFile is only tested with MSVC." )
+if(MSVC)
+	#message( FATAL_ERROR "This CMakeFile is only tested with MSVC." )
+	message( "Using MSVC" )
+elseif(MINGW)
+	message( "Using MINGW" )
+else()
+	message( FATAL_ERROR "This CMakeFile is only tested with MSVC and MINGW." )
 endif()
 
 # Location for SDL2 library and include files
@@ -66,35 +71,62 @@ add_custom_command(
 
 				
 # Copy SDL2.dll to output
-add_custom_command(
-        TARGET ${targetname} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${sdl2_library_dir}/bin/SDL2.dll
-                ${CMAKE_BINARY_DIR}/_output/bin/SDL2.dll)
+if(MSVC)
+	add_custom_command(
+			TARGET ${targetname} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy
+					${sdl2_library_dir}/bin/SDL2.dll
+					${CMAKE_BINARY_DIR}/_output/bin/SDL2.dll)
+elseif(MINGW)
+	add_custom_command(
+			TARGET ${targetname} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy
+					${sdl2_library_dir}/bin/libSDL2.dll
+					${CMAKE_BINARY_DIR}/_output/bin/libSDL2.dll)
+endif()
 				
 # Copy SDL2.lib to output
-add_custom_command(
-        TARGET ${targetname} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${sdl2_library_dir}/lib/SDL2.lib
-                ${CMAKE_BINARY_DIR}/_output/lib/SDL2.lib)
+if(MSVC)
+	add_custom_command(
+			TARGET ${targetname} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy
+					${sdl2_library_dir}/lib/SDL2.lib
+					${CMAKE_BINARY_DIR}/_output/lib/SDL2.lib)
+elseif(MINGW)
+	add_custom_command(
+			TARGET ${targetname} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy
+					${sdl2_library_dir}/lib/libSDL2.a
+					${CMAKE_BINARY_DIR}/_output/lib/libSDL2.a)
+endif()
 
 # Copy SDL2main.lib to output
-add_custom_command(
-        TARGET ${targetname} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${sdl2_library_dir}/lib/SDL2main.lib
-                ${CMAKE_BINARY_DIR}/_output/lib/SDL2main.lib)
-
+if(MSVC)
+	add_custom_command(
+			TARGET ${targetname} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy
+					${sdl2_library_dir}/lib/SDL2main.lib
+					${CMAKE_BINARY_DIR}/_output/lib/SDL2main.lib)
+elseif(MINGW)
+	add_custom_command(
+			TARGET ${targetname} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy
+					${sdl2_library_dir}/lib/libSDL2main.a
+					${CMAKE_BINARY_DIR}/_output/lib/libSDL2main.a)
+endif()
 				
 				
 				
 project (SDL_bgi_sample_mandelbrot)
 
 set(targetname mandelbrot)
-add_executable(${targetname} WIN32 ${CMAKE_SOURCE_DIR}/test/mandelbrot.c)
+add_executable(${targetname} ${CMAKE_SOURCE_DIR}/test/mandelbrot.c)
 target_include_directories(${targetname} PRIVATE ${CMAKE_SOURCE_DIR}/src ${sdl_include_dirs})
-target_link_libraries(${targetname} SDL_bgi ${sdl2_library_dir}/lib/SDL2.lib ${sdl2_library_dir}/lib/SDL2main.lib)
+if(MSVC)
+	target_link_libraries(${targetname} SDL_bgi ${sdl2_library_dir}/lib/SDL2.lib ${sdl2_library_dir}/lib/SDL2main.lib)
+elseif(MINGW)
+	target_link_libraries(${targetname} SDL_bgi ${sdl2_library_dir}/lib/libSDL2.dll.a ${sdl2_library_dir}/lib/libSDL2.a ${sdl2_library_dir}/lib/libSDL2.a ${sdl2_library_dir}/lib/libSDL2main.a)
+endif()
 
 # Set output directories for target
 set_target_properties( ${targetname} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/_output/bin )
@@ -102,8 +134,16 @@ set_target_properties( ${targetname} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG $
 set_target_properties( ${targetname} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/_output/bin )
 
 # Copy SDL2.dll to output
-add_custom_command(
-        TARGET ${targetname} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${sdl2_library_dir}/bin/SDL2.dll
-                ${CMAKE_BINARY_DIR}/_output/bin/SDL2.dll)				
+if(MSVC)
+	add_custom_command(
+			TARGET ${targetname} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy
+					${sdl2_library_dir}/lib/SDL2.lib
+					${CMAKE_BINARY_DIR}/_output/lib/SDL2.lib)
+elseif(MINGW)
+	add_custom_command(
+			TARGET ${targetname} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy
+					${sdl2_library_dir}/lib/libSDL2.a
+					${CMAKE_BINARY_DIR}/_output/lib/libSDL2.a)
+endif()		

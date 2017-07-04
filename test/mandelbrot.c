@@ -26,6 +26,10 @@
  * 
  */
 
+// Needed to make the code work with mingw-64. Otherwise it expects to
+// find WinMain defined
+#define SDL_MAIN_HANDLED
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <graphics.h>
@@ -187,7 +191,7 @@ void explain (void)
 
 // -----
 
-int main (void)
+int main(int argc, char *argv[])
 {
   int palette, c, init, redraw, flag;
   double xm, ym, xstep, ystep, x1, y1, x2, y2;
